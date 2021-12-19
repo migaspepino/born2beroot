@@ -165,7 +165,7 @@ Enter volume group name (just use one hyphen, LVM [doubles the hyphen](https://u
 
 ![enter VG name](https://imgur.com/o12Z2Tm.png)
 
-(If you messed up the naming after the install you can just use /> `vgrename -v wil--vg wil-vg`)
+(If you messed up the naming; after the install, you can just use $\> `vgrename -v wil--vg wil-vg`)
 
 select devices for VG:
 
@@ -189,7 +189,7 @@ After it's all done we finish:
 
 ![Finish2](https://imgur.com/vuqJ2jr.png)
 
-Now going one by one to each partition on the partition disks screen (selecting under `LVM VG wil--vg, LV` `root` ,`swap_1`, `home`) we will change the partition setting from `do not use` to `EXT4`, `swap area` and `EXT4` for `root` ,`swap_1` and `home` respectively:
+Now going one by one to each partition on the partition disks screen (selecting under `LVM VG wil-vg, LV` `root` ,`swap_1`, `home`) we will change the partition setting from `do not use` to `EXT4`, `swap area` and `EXT4` for `root` ,`swap_1` and `home` respectively:
 
 ![main menu1](https://imgur.com/nwQQaSi.png)
 
