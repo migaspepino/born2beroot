@@ -116,7 +116,9 @@ Go into mount point and chose none:
 
 ![no mount point](https://imgur.com/YMDF6nv.png)
 
-![mount point menu](https://imgur.com/w89ovmR.png)Then pick `Done  setting up the partition`
+![mount point menu](https://imgur.com/w89ovmR.png)
+
+Then pick `Done  setting up the partition`
 
 Now that we have two partitions lets encrypt one of them. Go to `configure encrypted volume`:
 
