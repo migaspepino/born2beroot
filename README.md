@@ -161,7 +161,7 @@ Select `create volume group`:
 
 ![create volume group](https://imgur.com/T2jSGdF.png)
 
-Enter volume group name:
+Enter volume group name (just use one hyphen, LVM [doubles the hyphen](https://unix.stackexchange.com/questions/319877/doubled-hyphens-in-lvm-dev-mapper-names) when a device path file is created):
 
 ![enter VG name](https://imgur.com/o12Z2Tm.png)
 
