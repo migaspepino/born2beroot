@@ -165,6 +165,8 @@ Enter volume group name (just use one hyphen, LVM [doubles the hyphen](https://u
 
 ![enter VG name](https://imgur.com/o12Z2Tm.png)
 
+(If you messed up the naming after the install you can just use /> `vgrename -v wil--vg wil-vg`)
+
 select devices for VG:
 
 ![select devices for vg](https://imgur.com/ofiCoIZ.png)
