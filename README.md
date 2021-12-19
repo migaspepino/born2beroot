@@ -132,3 +132,121 @@ Apply changes before proceeding:
 Chose `create encrypted volumes`:
 
 ![create encrypted volumes](https://imgur.com/6JDWtus.png)
+
+Select the partition to encrypt:
+
+![Select the partition to encrypt](https://imgur.com/znvqWOa.png)
+
+And Finish:
+
+![Finish](https://imgur.com/MLnrjkm.png)
+
+Encrypt it (Select yes):
+
+![Encrypt it](https://imgur.com/aZLimYy.png)
+
+![wait for it](https://imgur.com/koqVXhu.png)
+
+And give it a Password:
+
+![enter image description here](https://imgur.com/Nrn8Pe9.png)
+
+Now we'll start to populate this partition, select `configure the logical volume manager`:
+
+![configure the logical volume manager](https://imgur.com/U4VaTGt.png)
+
+([What is being done](https://www.youtube.com/watch?v=dMHFArkANP8))
+
+Select `create volume group`: 
+
+![create volume group](https://imgur.com/T2jSGdF.png)
+
+Enter volume group name:
+
+![enter VG name](https://imgur.com/o12Z2Tm.png)
+
+select devices for VG:
+
+![select devices for vg](https://imgur.com/ofiCoIZ.png)
+
+Select `Create Logical Volume`:
+
+![Create Logical Volume](https://imgur.com/fqNRiMK.png)
+
+Select the Volume Group we just created:
+
+![select the volume group](https://imgur.com/3kWCv0c.png)
+
+First we start with `root`  adding the size afterwards, then we'll do all the others:
+
+![Logical volume root](https://imgur.com/X3ifOuf.png)
+
+![Logical Volume swap](https://imgur.com/4XOxom5.png)
+
+After it's all done we finish:
+
+![Finish2](https://imgur.com/vuqJ2jr.png)
+
+Now going one by one to each partition on the partition disks screen (selecting under `LVM VG wil--vg, LV` `root` ,`swap_1`, `home`) we will change the partition setting from `do not use` to `EXT4`, `swap area` and `EXT4` for `root` ,`swap_1` and `home` respectively:
+
+![main menu1](https://imgur.com/nwQQaSi.png)
+
+![partition settings1](https://imgur.com/EUbt2cl.png)
+
+![Use partition as Ext4](https://imgur.com/xhAYnMV.png)
+
+![mount point /home](https://imgur.com/H7fHgvp.png)
+
+![partition settings1](https://imgur.com/EUbt2cl.png)
+
+![Use partition as Ext4 (2)](https://imgur.com/xhAYnMV.png)
+
+![mount point root](https://imgur.com/2aWKTfr.png)
+
+![partition settings1](https://imgur.com/EUbt2cl.png)
+
+![use as swap](https://imgur.com/uae7pex.png)
+
+We finish:
+
+![finish partitioning and write changes to disk](https://imgur.com/NUDWkEa.png)
+
+![confirmation prompt](https://imgur.com/2XzJdP4.png)
+
+Now awaits us a long wait:
+
+![Loading2](https://imgur.com/lzraSxc.png)
+
+Now for the finishing touches, we select a country of the mirror to download the package manager (I selected mine):
+
+![package manager mirror countries](https://imgur.com/KFcWNfg.png)
+
+Select a mirror:
+
+![Select a mirror](https://imgur.com/qQrdrIt.png)
+
+If you have a proxy configure it but it will probably be left blank:
+
+![ERGO PROXY](https://imgur.com/apo9lb7.png)
+
+More loading:
+
+![Loading3](https://imgur.com/1vFmeuV.png)
+
+Prompt to send Anonymous data:
+
+![data mining](https://imgur.com/hIT7Muo.png)
+
+Now to the software selection (uncheck all):
+
+![software selection](https://imgur.com/ce9EUEb.png)
+
+Now to install the boot loader into the `/boot` partition:
+
+![install grub yes](https://imgur.com/pF7dUWu.png)
+
+![/dev/sda or /boot partition](https://imgur.com/TECBdVm.png)
+
+And we're done!
+
+![finished](https://imgur.com/PAHnvRm.png)
