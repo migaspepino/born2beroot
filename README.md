@@ -161,11 +161,17 @@ Select `create volume group`:
 
 ![create volume group](https://imgur.com/T2jSGdF.png)
 
-Enter volume group name **(just use one hyphen, LVM [doubles the hyphen](https://unix.stackexchange.com/questions/319877/doubled-hyphens-in-lvm-dev-mapper-names) when a device path file is created)**:
+Enter volume group name (Note that I messed up and put two hyphens **just use one hyphen, LVM [doubles the hyphen](https://unix.stackexchange.com/questions/319877/doubled-hyphens-in-lvm-dev-mapper-names) when a device path file is created**):
 
 ![enter VG name](https://imgur.com/o12Z2Tm.png)
 
-(If you messed up the naming; after the install, you can just do [this](https://askubuntu.com/questions/765058/how-do-you-rename-the-volume-group-that-contains-the-root-volume-in-lvm) **DO NOT DO VGRENAME AND REBOOT** (if you still did just use `/sbin/lvm vgrename <changed name> <original name>` and `exit` and it will boot again))
+(**NOTES IF YOU MESSED UP THE NAMING**)
+
+(If you messed up the naming; after the install, you can just do [this](https://askubuntu.com/questions/765058/how-do-you-rename-the-volume-group-that-contains-the-root-volume-in-lvm))
+
+(**DO NOT DO VGRENAME AND REBOOT**)
+
+(if you still did, on the terminal that appears just use `/sbin/lvm vgrename <changed name> <original name>` + `exit` and it will boot again)
 
 select devices for VG:
 
