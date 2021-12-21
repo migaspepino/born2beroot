@@ -161,9 +161,9 @@ Select `create volume group`:
 
 ![create volume group](https://imgur.com/T2jSGdF.png)
 
-Enter volume group name (Note that I messed up and put two hyphens **just use one hyphen, LVM [doubles the hyphen](https://unix.stackexchange.com/questions/319877/doubled-hyphens-in-lvm-dev-mapper-names) when a device path file is created**):
+Enter volume group name `<yourname>-vg` (Note that I messed up and put two hyphens **just use one hyphen, LVM [doubles the hyphen](https://unix.stackexchange.com/questions/319877/doubled-hyphens-in-lvm-dev-mapper-names) when a device path file is created**):
 
-![enter VG name](https://imgur.com/o12Z2Tm.png)
+![enter VG name](https://imgur.com/A9wJErZ.png)
 
 (**NOTES IF YOU MESSED UP THE NAMING**)
 
@@ -190,6 +190,8 @@ First we start with `root`  adding the size afterwards, then we'll do all the ot
 ![Logical volume root](https://imgur.com/X3ifOuf.png)
 
 ![Logical Volume swap](https://imgur.com/4XOxom5.png)
+
+![Logical volume home](https://imgur.com/mdYx6ZJ.png)
 
 After it's all done we finish:
 
