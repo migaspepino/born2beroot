@@ -167,7 +167,7 @@ Enter volume group name (Note that I messed up and put two hyphens **just use on
 
 (**NOTES IF YOU MESSED UP THE NAMING**)
 
-(If you messed up the naming; after the install, you can just do [this](https://askubuntu.com/questions/765058/how-do-you-rename-the-volume-group-that-contains-the-root-volume-in-lvm))
+(If you messed up the naming; after the install, you can just do [this](https://wiki.networksecuritytoolkit.org/index.php/HowTo_Change_The_LVM_Volume_Group_Name_That_Includes_The_Root_Partition))
 
 (**DO NOT DO VGRENAME AND REBOOT**)
 
