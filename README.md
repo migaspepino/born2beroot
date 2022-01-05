@@ -415,7 +415,7 @@ To set *sudo* paths to `/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:
 Defaults        secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
 ```
 
-## SSH
+## *SSH*
 
 ### Step 1: Installing & Configuring SSH
 
@@ -694,7 +694,7 @@ $ getent group user42
 
 ## Script
 
-I recommend you do the script in the host then using [virtualbox's guest additions](https://linuxize.com/post/how-to-install-virtualbox-guest-additions-on-debian-10/) copy paste the contents.
+I recommend you do the script in the host then using [virtualbox's guest additions](https://linuxize.com/post/how-to-install-virtualbox-guest-additions-on-debian-10/) copy paste the contents. Or even easier connect by SSH.
 
 ## *cron*
 
@@ -727,6 +727,56 @@ $ sudo crontab -u root -l
 ```
 
 ## Usefull commands
+
+check ssh status:
+`sudo service ssh status`
+`sudo systemctl status ssh`
+
+restart ssh:
+`service ssh restart`
+
+ssh:
+```
+>ssh <username>@<ip-address> -p 4242
+>logout
+>exit
+```
+
+create group:
+`sudo groupadd <group>`
+
+Verify group:
+`getent group`
+
+adding user in a group:
+`# adduser <username> <group>`
+`# usermod -aG <group> <username>`
+
+Verify if sucessfull:
+`getent group <group>`
+
+Check which groups user account belongs:
+`groups`
+
+Check current hostname
+`hostnamectl`
+
+Change the hostname
+`hostnamectl set-hostname new_hostname`
+
+Change /etc/hosts file:
+`sudo nano /etc/hosts`
+
+Change old_hostname with new_hostname:
+`127.0.0.1       localhost`
+`127.0.0.1       new_hostname`
+
+Reboot and check the change
+`sudo reboot`
+
+check UFW status:
+`sudo ufw status numbered`
+`sudo ufw delete <number>`
 
 ## Bonus
 
