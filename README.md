@@ -30,7 +30,7 @@
     - [New user](#New-user)
     - [Groups](#Groups)
     - [Change Hostname](#Change-Hostname)
-    - [How to add and remove port ***x*** in UFW?](#How-to-add-and-remove-port-x-in-UFW?)
+    - [How to add and remove port ***x*** in UFW?](#How-to-add-and-remove-port-x-in-UFW)
 
 9. [Bonus](#bonus)
     - [Installation](#1-installation)
