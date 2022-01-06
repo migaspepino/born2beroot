@@ -739,10 +739,13 @@ $ sudo crontab -u root -l
 ### SSH commands
 
 check ssh status:
+
 `sudo service ssh status`
+
 `sudo systemctl status ssh`
 
 restart ssh:
+
 `service ssh restart`
 
 ssh:
@@ -755,34 +758,45 @@ ssh:
 ### What to check?
 
 Check partitions:
+
 `lsblk`
 
 AppArmor status:
+
 `sudo aa-status`
 
 sudo and user42 group users:
+
 `getent group sudo`
+
 `getent group user42` 
 
 ssh status:
+
 `sudo service ssh status`
 
 ufw status:
+
 `sudo ufw status`
 
 connect to VM through ssh:
+
 `ssh username@ipadress -p 4242` 
 
 sudo config file, You can `$ ls /etc/sudoers.d` first:
+
 `nano /etc/sudoers.d/<filename>`
 
 password expire policy:
+
 `nano /etc/login.defs` 
 
 password policy:
+
 `nano /etc/pam.d/common-password`
 
 cron schedule:
+
 `sudo crontab -l`
 
 ### New user
@@ -795,34 +809,44 @@ $ sudo chage -l username
 $ sudo adduser username sudo |
 $ sudo adduser username user42
 ```
+
 ### Groups
 
 create group:
+
 `sudo groupadd <group>`
 
 Verify group:
+
 `getent group`
 
 adding user in a group:
+
 `# adduser <username> <group>`
+
 `# usermod -aG <group> <username>`
 
 Verify if sucessfull:
+
 `getent group <group>`
 
 Check which groups user account belongs:
+
 `groups`
 
 
 ### Change Hostname
 
 Check current hostname
+
 `hostnamectl`
 
 Change the hostname
+
 `hostnamectl set-hostname <new_hostname>`
 
 Change /etc/hosts file:
+
 `sudo nano /etc/hosts`
 
 Change old_hostname with new_hostname:
@@ -838,18 +862,23 @@ Reboot and check the change
 
 ### How to add and remove port ***x*** in UFW?
 Allow:
+
 `sudo ufw allow 8080`
 
 Check: 
+
 `sudo ufw status` 
 
 Deny:
+
 `sudo ufw deny 8080`
 
 check UFW status:
+
 `sudo ufw status numbered`
 
 Delete:
+
 `sudo ufw delete <number>`
 
 To stop script running on boot you just need to remove or commit
