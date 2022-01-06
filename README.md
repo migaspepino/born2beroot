@@ -24,7 +24,15 @@
 5. [Script](#script)
 6. [*cron*](#cron)
     - [Setting Up a *cron* Job](#setting-up-a-cron-job)
-7. [Bonus](#bonus)
+7. [Useful commands](#Useful-commands)
+    - [SSH commands](#SSH-commands)
+    - [What to check?](#What-to-check)
+    - [New user](#New-user)
+    - [Groups](#Groups)
+    - [Change Hostname](#Change-Hostname)
+    - [How to add and remove port ***x*** in UFW?](#How-to-add-and-remove-port-x-in-UFW?)
+
+9. [Bonus](#bonus)
     - [Installation](#1-installation)
     - [Linux Lighttpd MariaDB PHP *(LLMP)* Stack](#2-linux-lighttpd-mariadb-php-llmp-stack)
        - [Step 1: Installing Lighttpd](#step-1-installing-lighttpd)
@@ -726,7 +734,9 @@ Check *root*'s scheduled *cron* jobs via `sudo crontab -u root -l`.
 $ sudo crontab -u root -l
 ```
 
-## Usefull commands
+## Useful commands
+
+### SSH commands
 
 check ssh status:
 `sudo service ssh status`
@@ -741,6 +751,51 @@ ssh:
 >logout
 >exit
 ```
+
+### What to check?
+
+Check partitions:
+`lsblk`
+
+AppArmor status:
+`sudo aa-status`
+
+sudo and user42 group users:
+`getent group sudo`
+`getent group user42` 
+
+ssh status:
+`sudo service ssh status`
+
+ufw status:
+`sudo ufw status`
+
+connect to VM through ssh:
+`ssh username@ipadress -p 4242` 
+
+sudo config file, You can `$ ls /etc/sudoers.d` first:
+`nano /etc/sudoers.d/<filename>`
+
+password expire policy:
+`nano /etc/login.defs` 
+
+password policy:
+`nano /etc/pam.d/common-password`
+
+cron schedule:
+`sudo crontab -l`
+
+### New user
+
+creating new user:
+
+```
+$ sudo adduser username
+$ sudo chage -l username 
+$ sudo adduser username sudo |
+$ sudo adduser username user42
+```
+### Groups
 
 create group:
 `sudo groupadd <group>`
@@ -758,25 +813,47 @@ Verify if sucessfull:
 Check which groups user account belongs:
 `groups`
 
+
+### Change Hostname
+
 Check current hostname
 `hostnamectl`
 
 Change the hostname
-`hostnamectl set-hostname new_hostname`
+`hostnamectl set-hostname <new_hostname>`
 
 Change /etc/hosts file:
 `sudo nano /etc/hosts`
 
 Change old_hostname with new_hostname:
-`127.0.0.1       localhost`
-`127.0.0.1       new_hostname`
+
+```
+127.0.0.1       localhost
+127.0.0.1       new_hostname
+```
 
 Reboot and check the change
 `sudo reboot`
 
+
+### How to add and remove port ***x*** in UFW?
+Allow:
+`sudo ufw allow 8080`
+
+Check: 
+`sudo ufw status` 
+
+Deny:
+`sudo ufw deny 8080`
+
 check UFW status:
 `sudo ufw status numbered`
+
+Delete:
 `sudo ufw delete <number>`
+
+To stop script running on boot you just need to remove or commit
+@reboot /path/to/monitoring.sh
 
 ## Bonus
 
@@ -1053,3 +1130,9 @@ $ ftp <ip-address>
 ```
 
 Terminate FTP session at any time via `CTRL + D`.
+
+## Resources
+
+Explanation of terms and whys: https://reposhub.com/linux/miscellaneous/RyouYoo-Born2beroot.html
+
+Evaluator tools: https://web.archive.org/web/20220105193028/https://github.com/HEADLIGHTER/Born2BeRoot-42/blob/main/evalknwoledge.txt
