@@ -379,7 +379,7 @@ $ sudo apt update
 Configure *sudo* via `sudo visudo /etc/sudoers.d/<filename>`. `<filename>` shall not end in `~` or contain `.`.
 
 ```
-$ sudo vi /etc/sudoers.d/<filename>
+$ sudo visudo /etc/sudoers.d/<filename>
 ```
 
 To limit authentication using *sudo* to 3 attempts *(defaults to 3 anyway)* in the event of an incorrect password, add below line to the file.
