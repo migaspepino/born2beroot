@@ -394,14 +394,10 @@ To add a custom error message in the event of an incorrect password:
 Defaults        badpass_message="<custom-error-message>"
 ```
 
-###
-To log all *sudo* commands to `/var/log/sudo/<filename>`:
+To log all *sudo* commands to `/var/log/sudo/sudo.log`:
 
 ```
-$ sudo mkdir /var/log/sudo
-<~~~>
-Defaults        logfile="/var/log/sudo/<filename>"
-<~~~>
+Defaults        logfile="/var/log/sudo/sudo.log"
 ```
 
 To archive all *sudo* inputs & outputs to `/var/log/sudo/`:
