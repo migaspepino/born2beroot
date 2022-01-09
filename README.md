@@ -1199,10 +1199,17 @@ Terminate FTP session at any time via `CTRL + D`.
 ## Resources
 
 [***Explanation of terms and whys***](https://reposhub.com/linux/miscellaneous/RyouYoo-Born2beroot.html)
+	
 [***Evaluator tools***](https://web.archive.org/web/20220105193028/https://github.com/HEADLIGHTER/Born2BeRoot-42/blob/main/evalknwoledge.txt)
+
 [***Wordpress Website***](https://wordpress.com/)
+
 [***Lighttpd Website***](https://www.lighttpd.net/)
+
 [_**MariaDB Website**_](https://mariadb.org/)
+
 [_**How to install WordPress with lighttpd on Debian 10?**_](https://www.osradar.com/install-wordpress-with-lighttpd-debian-10/)
+
 [_**How to Install Lighttpd with PHP and MariaDB on CentOS/RHEL 8/7**_](https://www.tecmint.com/install-lighttpd-with-php-fpm-mariadb-on-centos/)
+
 [_**How to Install PHP on Debian 11**_](https://computingforgeeks.com/how-to-install-php-on-debian-linux/)
