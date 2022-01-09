@@ -1039,6 +1039,7 @@ Now you can check if your connection is working properly by creating an informat
 Then you can try and access it going to you `http://'your-ip-address'/info.php`. Your webpage should display something like:
 
 ![phpinfo](https://i.imgur.com/gVQM0DD.png)
+
 After delete `info.php` as it is a security vulnerability. 
 
 If everything is according to the plan, you can now install and create your Wordpress website. 
