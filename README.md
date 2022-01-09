@@ -2,7 +2,7 @@
 
 **Version 1 of the Born2beroot exercise**
 
-<sub>Based on the tutorial by [hanshazairi](https://web.archive.org/web/20211229212338/https://github.com/hanshazairi/42-born2beroot/blob/main/README.md)</sub>
+<sub>Based on the tutorials by [hanshazairi](https://web.archive.org/web/20211229212338/https://github.com/hanshazairi/42-born2beroot/blob/main/README.md) and [caroldaniel](https://web.archive.org/web/20220109013343/https://github.com/caroldaniel/42sp-cursus-born2beroot/blob/master/guides/Bonus-en.md)</sub>
 
 ## Table of Contents
 1. [Installation](#installation)
@@ -33,13 +33,11 @@
     - [How to add and remove port ***x*** in UFW?](#How-to-add-and-remove-port-x-in-UFW)
 
 9. [Bonus](#bonus)
-    - [Installation](#1-installation)
-    - [Linux Lighttpd MariaDB PHP *(LLMP)* Stack](#2-linux-lighttpd-mariadb-php-llmp-stack)
-       - [Step 1: Installing Lighttpd](#step-1-installing-lighttpd)
-       - [Step 2: Installing & Configuring MariaDB](#step-2-installing--configuring-mariadb)
-       - [Step 3: Installing PHP](#step-3-installing-php)
-       - [Step 4: Downloading & Configuring WordPress](#step-4-downloading--configuring-wordpress)
-       - [Step 5: Configuring Lighttpd](#step-5-configuring-lighttpd)
+    - [lighttpd](#lighttpd)
+    - [MariaDB](#MariaDB)
+    - [PHP](#PHP)
+    - [Wordpress](#Wordpress)
+    - [Fail2ban](#Fail2ban)
     - [File Transfer Protocol *(FTP)*](#3-file-transfer-protocol-ftp)
        - [Step 1: Installing & Configuring FTP](#step-1-installing--configuring-ftp)
        - [Step 2: Connecting to Server via FTP](#step-2-connecting-to-server-via-ftp)
@@ -49,7 +47,7 @@ The following note is from the Guide on which this one is based (see note at the
 <sub>At the time of writing, the latest stable version of [Debian](https://www.debian.org) is *Debian 10 Buster*. </sub>
 <sub>Watch *bonus* installation walkthrough *(no audio)* [here](https://youtu.be/2w-2MX5QrQw).</sub>
 
-However at the time of rewriting of this Guide the latest stable version of [Debian](https://www.debian.org) is *Debian 10 _bullseye_*
+However at the time of rewriting of this Guide the latest stable version of [Debian](https://www.debian.org) is *Debian 11 _bullseye_*
 <sub>This is a similar process for the mandatory and bonus part the only thing that changes is the number of partitions and their size.</sub>
 
 ___
@@ -882,98 +880,82 @@ To stop script running on boot you just need to remove or commit
 
 ## Bonus
 
-### #1: Installation
+## Lighttpd
+	
+**Lighttpd** is an open-source web server known for being fast, secure and optimized for less memory consumption than its pairs. 
 
-Watch *bonus* installation walkthrough *(no audio)* [here](https://youtu.be/2w-2MX5QrQw).
+Now you can install lighttpd.
 
-### #2: Linux Lighttpd MariaDB PHP *(LLMP)* Stack
-
-#### Step 1: Installing Lighttpd
-
-Install *lighttpd* via `sudo apt install lighttpd`.
-
-```
-$ sudo apt install lighttpd
+```sh
+# aptitude install lighttpd
 ```
 
-Verify whether *lighttpd* was successfully installed via `dpkg -l | grep lighttpd`.
+After installation is complete, you can use the following commands to start and enable lighttpd at startup. Don't forget to also check its status and current version. 
 
-```
-$ dpkg -l | grep lighttpd
-```
-
-Allow incoming connections using Port 80 via `sudo ufw allow 80`.
-
-```
-$ sudo ufw allow 80
+```sh
+# lighttpd -v
+# systemctl start lighttpd
+# systemctl enable lighttpd
+# systemctl status lighttpd
 ```
 
-#### Step 2: Installing & Configuring MariaDB
+Now, you will need to allow HTTP traffic in you Firewall.
+```sh
+# ufw allow http
+``` 
+The default port for `http` traffic is `80`. Make sure it is already [included](screenshots/41.png) on your firewall settings. 
+```sh
+# ufw status
+``` 
 
-Install *mariadb-server* via `sudo apt install mariadb-server`.
+## MariaDB
 
-```
-$ sudo apt install mariadb-server
-```
+**MariaDB** is an open source database management system that is a sort-of replacement for the MySQL database technology, being very much compatible and even sharing some of its own commands. It is SQL based and completely free. 
 
-Verify whether *mariadb-server* was successfully installed via `dpkg -l | grep mariadb-server`.
+To install `MariaDB` on your server, you must do the following steps:
 
-```
-$ dpkg -l | grep mariadb-server
-```
-
-Start interactive script to remove insecure default settings via `sudo mysql_secure_installation`.
-
-```
-$ sudo mysql_secure_installation
-Enter current password for root (enter for none): #Just press Enter (do not confuse database root with system root)
-Set root password? [Y/n] n
-Remove anonymous users? [Y/n] Y
-Disallow root login remotely? [Y/n] Y
-Remove test database and access to it? [Y/n] Y
-Reload privilege tables now? [Y/n] Y
+```sh
+# aptitude install mariadb-server
 ```
 
-Log in to the MariaDB console via `sudo mariadb`.
-
-```
-$ sudo mariadb
-MariaDB [(none)]>
-```
-
-Create new database via `CREATE DATABASE <database-name>;`.
-
-```
-MariaDB [(none)]> CREATE DATABASE <database-name>;
+Same thing as done in `lighttpd`, you must make sure to start and enable `MariaDB` on startup:
+```sh
+# systemctl start mariadb
+# systemctl enable mariadb
+# systemctl status mariadb
 ```
 
-Create new database user and grant them full privileges on the newly-created database via `GRANT ALL ON <database-name>.* TO '<username-2>'@'localhost' IDENTIFIED BY '<password-2>' WITH GRANT OPTION;`.
+Then, you should make sure to secure MariaDB server with the following command:
 
+```sh
+# mysql_secure_installation
 ```
-MariaDB [(none)]> GRANT ALL ON <database-name>.* TO '<username-2>'@'localhost' IDENTIFIED BY '<password-2>' WITH GRANT OPTION;
-```
+You should configure your MariaDB like:
 
-Flush the privileges via `FLUSH PRIVILEGES;`.
-
-```
-MariaDB [(none)]> FLUSH PRIVILEGES;
-```
-
-Exit the MariaDB shell via `exit`.
-
-```
-MariaDB [(none)]> exit
-```
-
-Verify whether database user was successfully created by logging in to the MariaDB console via `mariadb -u <username-2> -p`.
-
-```
-$ mariadb -u <username-2> -p
-Enter password: <password-2>
-MariaDB [(none)]>
+```sh
+# Switch to unix_socket authentication [Y/n]: Y
+# Enter current password for root (enter for none): Enter
+# Set root password? [Y/n]: Y
+# New password: ************
+# Re-enter new password: ************
+# Remove anonymous users? [Y/n]: Y
+# Disallow root login remotely? [Y/n]: Y
+# Remove test database and access to it? [Y/n]:  Y
+# Reload privilege tables now? [Y/n]:  Y
 ```
 
-Confirm whether database user has access to the database via `SHOW DATABASES;`.
+Then, you must restart `MariaDB` service:
+```sh
+# systemctl restart mariadb
+```
+
+Now that you already have a database management system installed, you will need to configure a Database to host your Wordpress site. 
+
+```sh
+# mysql -u root -p
+```
+
+You will be asked to enter your DB password. Then, you can create de Database for your Wordpress site. The final result should look like:
 
 ```
 MariaDB [(none)]> SHOW DATABASES;
@@ -985,103 +967,161 @@ MariaDB [(none)]> SHOW DATABASES;
 +--------------------+
 ```
 
-Exit the MariaDB shell via `exit`.
+To do so, use the following comands on the MariaDB terminal:
 
-```
-MariaDB [(none)]> exit
-```
-
-#### Step 3: Installing PHP
-
-Install *php-cgi* & *php-mysql* via `sudo apt install php-cgi php-mysql`.
-
-```
-$ sudo apt install php-cgi php-mysql
+```txt
+MariaDB [(none)]> CREATE DATABASE wordpress;
+MariaDB [(none)]> CREATE USER 'admin'@'localhost' IDENTIFIED BY 'WPadm1n';
+MariaDB [(none)]> GRANT ALL ON wordpress.* TO 'admin'@'localhost' IDENTIFIED BY 'WPadm1n' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+EXIT;
 ```
 
-Verify whether *php-cgi* & *php-mysql* was successfully installed via `dpkg -l | grep php`.
+## PHP
 
-```
-$ dpkg -l | grep php
-```
+**PHP** is a well-known and open-source scripting language for servers that is quite popular to develop web pages. You will need to install it in order to allow proper functioning of the Wordpress website you will try to create. For this activity, we will install the last available PHP version, which currently is `8.0`.
 
-#### Step 4: Downloading & Configuring WordPress
+> If you're using Debian you you need to install some repositories in order to be able to install `php 8.0`. 
+> ```sh
+> # aptitude install -y lsb-release ca-certificates apt-transport-https software-properties-common
+> # echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/sury-php.list
+> # wget -qO - https://packages.sury.org/php/apt.gpg | sudo apt-key add -
+> # aptitude update
+> # aptitude install php8.0
+> ```
 
-Install *wget* via `sudo apt install wget`.
+You must install PHP and some of its modules that might be helpful to create a full operational Wordpress website. Only `php-cgi` `php-common` `php-cli` and `php-mysql` are in fact, fundamental to this project. However, I chose to download some other in order to, in the future, be able to expand my website's functionality. You may choose any packages you may find interesting. 
 
-```
-$ sudo apt install wget
-```
-
-Download WordPress to `/var/www/html` via `sudo wget http://wordpress.org/latest.tar.gz -P /var/www/html`.
-
-```
-$ sudo wget http://wordpress.org/latest.tar.gz -P /var/www/html
-```
-
-Extract downloaded content via `sudo tar -xzvf /var/www/html/latest.tar.gz`.
-
-```
-$ sudo tar -xzvf /var/www/html/latest.tar.gz
+```sh
+# aptitude install php-cgi php-common php-cli php-mysql php-gd php-imagick php-recode php-tidy php-xml php-xmlrpc php-fpm
 ```
 
-Remove tarball via `sudo rm /var/www/html/latest.tar.gz`.
+It is ok if `php-recode` doesn't install.
 
-```
-$ sudo rm /var/www/html/latest.tar.gz
-```
+After installing all the php packages, you will need to configure some extra details. First, you will need to make sure `Apache2`is not installed in your server. It might be so thanks to php dependencies or even a pre-installation option you might have accidentely flagged. If it is, remove it completely from it, as so not to create any clashes between the two http servers.
 
-Copy content of `/var/www/html/wordpress` to `/var/www/html` via `sudo cp -r /var/www/html/wordpress/* /var/www/html`.
-
+```sh
+# aptitude purge apache2
 ```
-$ sudo cp -r /var/www/html/wordpress/* /var/www/html
-```
+Then, you will need to configure some php info:
 
-Remove `/var/www/html/wordpress` via `sudo rm -rf /var/www/html/wordpress`
-
-```
-$ sudo rm -rf /var/www/html/wordpress
+```sh
+# nano /etc/php/<version>/cgi/php.ini
 ```
 
-Create WordPress configuration file from its sample via `sudo cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php`.
+make it look like:
 
-```
-$ sudo cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
-```
+![cgi.fix_pathinfo=1](https://imgur.com/6JZ89t7.png)
 
-Configure WordPress to reference previously-created MariaDB database & user via `sudo vi /var/www/html/wp-config.php`.
+In nano you can use <kbd>Ctrl</kbd> + <kbd>W</kbd> to find `cgi.fix_pathinfo=1` and uncomment it.
 
-```
-$ sudo vi /var/www/html/wp-config.php
-```
+Now, you must activate the modules for `fastcgi` using the following comands:
 
-Replace the below
-
-```
-23 define( 'DB_NAME', 'database_name_here' );^M
-26 define( 'DB_USER', 'username_here' );^M
-29 define( 'DB_PASSWORD', 'password_here' );^M
+```sh
+# lighty-enable-mod fastcgi
+# lighty-enable-mod fastcgi-php
 ```
 
-with:
+Do restart the service:
 
 ```
-23 define( 'DB_NAME', '<database-name>' );^M
-26 define( 'DB_USER', '<username-2>' );^M
-29 define( 'DB_PASSWORD', '<password-2>' );^M
+service lighttpd force-reload
 ```
 
-#### Step 5: Configuring Lighttpd
- 
-Enable below modules via `sudo lighty-enable-mod fastcgi; sudo lighty-enable-mod fastcgi-php; sudo service lighttpd force-reload`.
-
+Now you can check if your connection is working properly by creating an information file to be displayed at your local browser:
+```sh
+# nano /var/www/html/info.php
 ```
-$ sudo lighty-enable-mod fastcgi
-$ sudo lighty-enable-mod fastcgi-php
-$ sudo service lighttpd force-reload
+```
+<?php phpinfo(); ?>
 ```
 
-### #3: File Transfer Protocol *(FTP)*
+Then you can try and access it going to you `http://'your-ip-address'/info.php`. Your webpage should display something like:
+
+![phpinfo](https://i.imgur.com/gVQM0DD.png)
+After delete `info.php` as it is a security vulnerability. 
+
+If everything is according to the plan, you can now install and create your Wordpress website. 
+
+##	Wordpress
+
+To install **Wordpress** into your computer, you must first make sure you have the `wget` and `tar` packages installed. 
+
+```sh
+# aptitude install wget
+# aptitude install tar
+```
+
+After that, you can download the latest available release of Wordpress and unzip it:
+```sh
+# wget http://wordpress.org/latest.tar.gz
+# tar -xzvf latest.tar.gz
+# mv wordpress/* /var/www/html/
+# rm -rf latest.tar.gz wordpress
+```
+
+Create a Wordpress configuration file from its downloaded sample, and then edit it:
+```sh
+# mv /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+# vim /var/www/html/wp-config.php
+```
+
+You must alter the 3 lines that specify the `DB name`, `DB user`, `DB password` and `DB host`.
+
+Lastly, you must change your wordpress folders permitions:
+
+```sh
+# chown -R www-data:www-data /var/www/html/
+# chmod -R 755 /var/www/html/
+```
+
+At last, restart `lighttpd` again and we are finally able to go to the computer's browser and type (might be different if using UTM):
+
+```txt
+http://127.0.0.1/
+```
+Make sure you have port forwarding `80 <--> 80` configured in the VirtualBox. 
+
+
+The configuration menu for Wordpress should appear. You may configure it as you wish. Once it's all set, you may configure it as you wish: the sky is the limit!
+
+##	Fail2ban
+
+
+We decided to install, as part of the last bonus task, `Fail2Ban`, a service that gives an extra layer of protection to any other service that connects through password with your server. 
+
+`Fail2Ban` finds failed login attempts using your service's `log` and blocks new attempts at login from those IPs. In doing so, it disencourages hackers and people with malicious intetions from accessing your server in full. 
+
+We will install `Fail2Ban` and configure it so it blocks remote attempts from SSH connections that typed the wrong password more than a few times.
+
+`Fail2Ban` can be found on the `EPEL` repository, which was already enabled previously on our machine. You can install it normally:
+
+```sh
+# aptitude install fail2ban
+```
+Then, you can start it. I chose **not** to enable it at startup:
+```sh
+# systemctl start fail2ban
+```
+
+You will need to create and edit the `/etc/fail2ban/jail.local` with some [new configuration settings](screenshots/60.png) regarding ssh service, in order to activate `fail2ban` on your computer. You must then restart the service.
+
+```sh
+# cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+# systemctl restart fail2ban
+# systemctl status fail2ban
+```
+
+Since we're using a different port for ssh (port 4242), we will also need to edit the `/etc/fail2ban/jail.conf` to add the ssh port accordinly. You may choose to edit everything through this file, if you prefer. 
+
+To find status of failed and banned IP address, and the log file for `fail2ban`:
+```sh
+# fail2ban-client status
+# fail2ban-client status sshd
+# tail -f /var/log/fail2ban.log
+```
+
+## File Transfer Protocol *(FTP)*
 
 #### Step 1: Installing & Configuring FTP
 
@@ -1158,6 +1198,11 @@ Terminate FTP session at any time via `CTRL + D`.
 
 ## Resources
 
-Explanation of terms and whys: https://reposhub.com/linux/miscellaneous/RyouYoo-Born2beroot.html
-
-Evaluator tools: https://web.archive.org/web/20220105193028/https://github.com/HEADLIGHTER/Born2BeRoot-42/blob/main/evalknwoledge.txt
+[***Explanation of terms and whys***](https://reposhub.com/linux/miscellaneous/RyouYoo-Born2beroot.html)
+[***Evaluator tools***](https://web.archive.org/web/20220105193028/https://github.com/HEADLIGHTER/Born2BeRoot-42/blob/main/evalknwoledge.txt)
+[***Wordpress Website***](https://wordpress.com/)
+[***Lighttpd Website***](https://www.lighttpd.net/)
+[_**MariaDB Website**_](https://mariadb.org/)
+[_**How to install WordPress with lighttpd on Debian 10?**_](https://www.osradar.com/install-wordpress-with-lighttpd-debian-10/)
+[_**How to Install Lighttpd with PHP and MariaDB on CentOS/RHEL 8/7**_](https://www.tecmint.com/install-lighttpd-with-php-fpm-mariadb-on-centos/)
+[_**How to Install PHP on Debian 11**_](https://computingforgeeks.com/how-to-install-php-on-debian-linux/)
